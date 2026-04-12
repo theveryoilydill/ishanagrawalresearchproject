@@ -146,22 +146,3 @@
   opacity: 1;
   visibility: visible;
 }
-
-.gn-math-wrapper {
-  height: 100%;
-  width: 100%;
-  display: flex;
-}
-
-.gn-math-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.content-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background-color: white;
-}

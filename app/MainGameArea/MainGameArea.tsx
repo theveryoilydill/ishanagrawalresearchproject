@@ -1,24 +1,19 @@
 import { useState, useRef } from "react";
 import "./MainGameArea.css";
-import { GN_MATH } from "../games/Games";
-
-enum TabState {
-  ON = "on",
-  OFF = "off",
-}
+import { SAFE_URL } from "../games/Sources";
 
 interface Tab {
   id: string;
   label: string;
-  state: TabState;
+  state: boolean;
 }
 
 export function MainGameArea() {
   const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
-  const [tabStates, setTabStates] = useState<TabState[]>([
-    TabState.OFF,
-    TabState.OFF,
-    TabState.OFF,
+  const [tabStates, setTabStates] = useState<boolean[]>([
+    false,
+    false,
+    false,
   ]);
 
   const tabs: Tab[] = [
@@ -29,13 +24,13 @@ export function MainGameArea() {
 
   const handlePowerOn = () => {
     const newStates = [...tabStates];
-    newStates[activeTabIndex] = TabState.ON;
+    newStates[activeTabIndex] = true;
     setTabStates(newStates);
   };
 
   const handleStop = () => {
     const newStates = [...tabStates];
-    newStates[activeTabIndex] = TabState.OFF;
+    newStates[activeTabIndex] = false;
     setTabStates(newStates);
   };
 
@@ -66,27 +61,27 @@ export function MainGameArea() {
         <button
           onClick={handlePowerOn}
           className="btn btn-power-on"
-          disabled={tabs[activeTabIndex].state === TabState.ON}
+          disabled={tabs[activeTabIndex].state === true}
         >
           Power On
         </button>
         <button
           onClick={handleStop}
           className="btn btn-stop"
-          disabled={tabs[activeTabIndex].state !== TabState.ON}
+          disabled={tabs[activeTabIndex].state !== true}
         >
           Stop
         </button>
         <button
           onClick={handleFullScreen}
           className="btn btn-fullscreen"
-          disabled={tabs[activeTabIndex].state !== TabState.ON}
+          disabled={tabs[activeTabIndex].state !== true}
           title="Full screen"
         >
           Full Screen
         </button>
-        <span className={`status ${tabs[activeTabIndex].state === TabState.ON ? "active" : "inactive"}`}>
-          {tabs[activeTabIndex].state === TabState.ON ? "ON" : "OFF"}
+        <span className={`status ${tabs[activeTabIndex].state === true ? "active" : "inactive"}`}>
+          {tabs[activeTabIndex].state === true ? "ON" : "OFF"}
         </span>
       </div>
 
@@ -109,8 +104,8 @@ export function MainGameArea() {
               key={tab.id}
               className={`tab-pane ${index === activeTabIndex ? "visible" : "hidden"}`}
             >
-              {tabs[activeTabIndex].state === TabState.ON && (
-                <GN_MATH />
+              {tabs[activeTabIndex].state === true && (
+                <SAFE_URL />
               )}
             </div>
           ))}
@@ -119,5 +114,3 @@ export function MainGameArea() {
     </main>
   );
 }
-
-const resources = [];
